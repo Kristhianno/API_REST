@@ -29,6 +29,21 @@ def create_Cliente():
     return jsonify({'Lista de Clientes': Clientes})
 
 
+@app.route('/Clientes/<string:profissao>', methods=['PUT'])
+def update_Cliente(profissao):
+    UpdateCliente = [
+        Cliente for Cliente in Clientes if Cliente['profissao'] == profissao]
+    UpdateCliente[0]['profissao'] = request.json['profissao']
+    return jsonify({'Clientes': UpdateCliente[0]})
+
+
+@app.route('/Clientes/<string:nome>', methods=['DELETE'])
+def delet_Cliente(nome):
+    delCliente = [Cliente for Cliente in Clientes if Cliente['nome'] == nome]
+    Clientes.remove(delCliente[0])
+    return jsonify({'Clientes': delCliente[0]})
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
 
